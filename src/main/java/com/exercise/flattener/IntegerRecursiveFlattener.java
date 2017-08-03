@@ -1,5 +1,6 @@
 package com.exercise.flattener;
 
+import com.exercise.flattener.exception.FlattenException;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.*;
@@ -10,7 +11,7 @@ import java.util.*;
 public class IntegerRecursiveFlattener implements ArrayFlattener<Integer> {
 
     @Override
-    public Integer[] flatten(Object[] nestedArray) {
+    public Integer[] flatten(Object[] nestedArray) throws FlattenException {
         Integer[] flatOutput;
         if (nestedArray == null) {
             flatOutput = null;
@@ -24,7 +25,9 @@ public class IntegerRecursiveFlattener implements ArrayFlattener<Integer> {
                 } else if (o instanceof Object[]) {
                     flatCollection.addAll(Arrays.asList(flatten((Object[]) o)));
                 } else {
-                    throw new IllegalArgumentException("Nested array contains other than integers [ " + ObjectUtils.toString(o) + "]");
+                    throw new FlattenException(
+                            new IllegalArgumentException("Nested array contains other than integers [ " + ObjectUtils.toString(o) + "]")
+                    );
                 }
             }
             flatOutput = flatCollection.toArray(new Integer[flatCollection.size()]);

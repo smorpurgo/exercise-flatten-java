@@ -1,5 +1,6 @@
 package com.exercise.flattener;
 
+import com.exercise.flattener.exception.FlattenException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,28 +40,28 @@ public class IntegerFlattenerTest {
         assertArrayEquals("Empty output", new Integer[0], flattener.flatten(inputEmpty));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = FlattenException.class)
     public void testInvalidIntegerArray() throws Exception {
         flattener.flatten(inputInvalid);
     }
 
     @Test
-    public void testSimple() {
+    public void testSimple() throws FlattenException {
         assertArrayEquals("same arrays", expectedSorted, flattener.flatten(inputFlat));
     }
 
     @Test
-    public void testNestedOneLevel() {
+    public void testNestedOneLevel() throws FlattenException {
         assertArrayEquals("same arrays", expectedSorted, flattener.flatten(inputNestOneLevel));
     }
 
     @Test
-    public void testNestedMultipleLevels() {
+    public void testNestedMultipleLevels() throws FlattenException {
         assertArrayEquals("same arrays", expectedSorted, flattener.flatten(inputNestedMultipleLevel));
     }
 
     @Test
-    public void testMissorted() {
+    public void testMissorted() throws FlattenException {
         assertArrayEquals("same arrays", expectedMissorted, flattener.flatten(inputMissorted));
     }
 }
